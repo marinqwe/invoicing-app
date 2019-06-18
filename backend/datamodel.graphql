@@ -1,0 +1,39 @@
+type Invoice {
+  id: ID! @unique @id
+  name: Name @relation(name: "InvoiceOnName", onDelete: CASCADE)
+  currency: String!
+  items: [Item]! @relation(name: "InvoiceOnItem", onDelete: CASCADE)
+  status: String! @default(value: "DRAFT")
+  isPaid: Boolean! @default(value: false) #paidFlag
+  creditnote: Creditnote @relation(name: "InvoiceOnCredit", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Item {
+  id: ID! @unique @id
+  description: String! @default(value: "Unknown item")
+  price: Float!
+  invoice: Invoice! @relation(name: "InvoiceOnItem", link: INLINE, onDelete: SET_NULL) #relationship with Invoice
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Creditnote {
+  id: ID! @unique @id
+  name: String! @default(value: "Credit note")
+  descriptions: [String]! @scalarList(strategy: RELATION)
+  prices: [Float]!  @scalarList(strategy: RELATION)
+  invoice: Invoice! @relation(name: "InvoiceOnCredit", link: INLINE, onDelete: SET_NULL) #relationship with Invoice
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Name {
+  id: ID! @unique @id
+  yearIssued: String!
+  sfx: String!
+  invoice: Invoice! @relation(name: "InvoiceOnName", link: INLINE, onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

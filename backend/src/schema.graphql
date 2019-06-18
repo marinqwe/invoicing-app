@@ -1,0 +1,30 @@
+# import * from './generated/prisma.graphql'
+
+type Mutation {
+  createInvoice(name: String, currency: String, status: String, isPaid: Boolean): Invoice!
+  createItem(description: String, price: Float, invoiceId: ID!): Item!
+  createCreditnote(name: String, items: Item, currency: String, invoiceId: ID!): Creditnote!
+  deleteInvoice(id: ID!): Invoice
+  updateInvoice(id: ID!, status: String, currency: String, isPaid: Boolean): Invoice!
+  deleteItem(id: ID!): Item
+}
+
+type Query {
+  invoice(where: InvoiceWhereUniqueInput!): Invoice!
+  names(last: Int): [Name]!
+  invoices(orderBy: InvoiceOrderByInput, where: InvoiceWhereInput, skip: Int, first: Int): [Invoice]!
+  invoicesConnection(where: InvoiceWhereInput): InvoiceConnection!
+  items(where: ItemWhereInput): [Item]!
+  creditnotes(where: CreditnoteWhereInput): [Creditnote]!
+}
+
+type Invoice {
+  id: ID!
+  name: Name!
+  currency: String!
+  items: [Item]!
+  status: String!
+  isPaid: Boolean!
+  creditnote: Creditnote
+  createdAt: DateTime!
+}

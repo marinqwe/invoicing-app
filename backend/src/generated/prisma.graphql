@@ -1,0 +1,963 @@
+type AggregateCreditnote {
+  count: Int!
+}
+
+type AggregateInvoice {
+  count: Int!
+}
+
+type AggregateItem {
+  count: Int!
+}
+
+type AggregateName {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Creditnote {
+  id: ID!
+  name: String!
+  descriptions: [String!]!
+  prices: [Float!]!
+  invoice: Invoice!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CreditnoteConnection {
+  pageInfo: PageInfo!
+  edges: [CreditnoteEdge]!
+  aggregate: AggregateCreditnote!
+}
+
+input CreditnoteCreatedescriptionsInput {
+  set: [String!]
+}
+
+input CreditnoteCreateInput {
+  id: ID
+  name: String
+  descriptions: CreditnoteCreatedescriptionsInput
+  prices: CreditnoteCreatepricesInput
+  invoice: InvoiceCreateOneWithoutCreditnoteInput!
+}
+
+input CreditnoteCreateOneWithoutInvoiceInput {
+  create: CreditnoteCreateWithoutInvoiceInput
+  connect: CreditnoteWhereUniqueInput
+}
+
+input CreditnoteCreatepricesInput {
+  set: [Float!]
+}
+
+input CreditnoteCreateWithoutInvoiceInput {
+  id: ID
+  name: String
+  descriptions: CreditnoteCreatedescriptionsInput
+  prices: CreditnoteCreatepricesInput
+}
+
+type CreditnoteEdge {
+  node: Creditnote!
+  cursor: String!
+}
+
+enum CreditnoteOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CreditnotePreviousValues {
+  id: ID!
+  name: String!
+  descriptions: [String!]!
+  prices: [Float!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CreditnoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Creditnote
+  updatedFields: [String!]
+  previousValues: CreditnotePreviousValues
+}
+
+input CreditnoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CreditnoteWhereInput
+  AND: [CreditnoteSubscriptionWhereInput!]
+  OR: [CreditnoteSubscriptionWhereInput!]
+  NOT: [CreditnoteSubscriptionWhereInput!]
+}
+
+input CreditnoteUpdatedescriptionsInput {
+  set: [String!]
+}
+
+input CreditnoteUpdateInput {
+  name: String
+  descriptions: CreditnoteUpdatedescriptionsInput
+  prices: CreditnoteUpdatepricesInput
+  invoice: InvoiceUpdateOneRequiredWithoutCreditnoteInput
+}
+
+input CreditnoteUpdateManyMutationInput {
+  name: String
+  descriptions: CreditnoteUpdatedescriptionsInput
+  prices: CreditnoteUpdatepricesInput
+}
+
+input CreditnoteUpdateOneWithoutInvoiceInput {
+  create: CreditnoteCreateWithoutInvoiceInput
+  update: CreditnoteUpdateWithoutInvoiceDataInput
+  upsert: CreditnoteUpsertWithoutInvoiceInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CreditnoteWhereUniqueInput
+}
+
+input CreditnoteUpdatepricesInput {
+  set: [Float!]
+}
+
+input CreditnoteUpdateWithoutInvoiceDataInput {
+  name: String
+  descriptions: CreditnoteUpdatedescriptionsInput
+  prices: CreditnoteUpdatepricesInput
+}
+
+input CreditnoteUpsertWithoutInvoiceInput {
+  update: CreditnoteUpdateWithoutInvoiceDataInput!
+  create: CreditnoteCreateWithoutInvoiceInput!
+}
+
+input CreditnoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  invoice: InvoiceWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CreditnoteWhereInput!]
+  OR: [CreditnoteWhereInput!]
+  NOT: [CreditnoteWhereInput!]
+}
+
+input CreditnoteWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Invoice {
+  id: ID!
+  name: Name
+  currency: String!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  status: String!
+  isPaid: Boolean!
+  creditnote: Creditnote
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type InvoiceConnection {
+  pageInfo: PageInfo!
+  edges: [InvoiceEdge]!
+  aggregate: AggregateInvoice!
+}
+
+input InvoiceCreateInput {
+  id: ID
+  name: NameCreateOneWithoutInvoiceInput
+  currency: String!
+  items: ItemCreateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteCreateOneWithoutInvoiceInput
+}
+
+input InvoiceCreateOneWithoutCreditnoteInput {
+  create: InvoiceCreateWithoutCreditnoteInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceCreateOneWithoutItemsInput {
+  create: InvoiceCreateWithoutItemsInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceCreateOneWithoutNameInput {
+  create: InvoiceCreateWithoutNameInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceCreateWithoutCreditnoteInput {
+  id: ID
+  name: NameCreateOneWithoutInvoiceInput
+  currency: String!
+  items: ItemCreateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+}
+
+input InvoiceCreateWithoutItemsInput {
+  id: ID
+  name: NameCreateOneWithoutInvoiceInput
+  currency: String!
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteCreateOneWithoutInvoiceInput
+}
+
+input InvoiceCreateWithoutNameInput {
+  id: ID
+  currency: String!
+  items: ItemCreateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteCreateOneWithoutInvoiceInput
+}
+
+type InvoiceEdge {
+  node: Invoice!
+  cursor: String!
+}
+
+enum InvoiceOrderByInput {
+  id_ASC
+  id_DESC
+  currency_ASC
+  currency_DESC
+  status_ASC
+  status_DESC
+  isPaid_ASC
+  isPaid_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type InvoicePreviousValues {
+  id: ID!
+  currency: String!
+  status: String!
+  isPaid: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type InvoiceSubscriptionPayload {
+  mutation: MutationType!
+  node: Invoice
+  updatedFields: [String!]
+  previousValues: InvoicePreviousValues
+}
+
+input InvoiceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InvoiceWhereInput
+  AND: [InvoiceSubscriptionWhereInput!]
+  OR: [InvoiceSubscriptionWhereInput!]
+  NOT: [InvoiceSubscriptionWhereInput!]
+}
+
+input InvoiceUpdateInput {
+  name: NameUpdateOneWithoutInvoiceInput
+  currency: String
+  items: ItemUpdateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteUpdateOneWithoutInvoiceInput
+}
+
+input InvoiceUpdateManyMutationInput {
+  currency: String
+  status: String
+  isPaid: Boolean
+}
+
+input InvoiceUpdateOneRequiredWithoutCreditnoteInput {
+  create: InvoiceCreateWithoutCreditnoteInput
+  update: InvoiceUpdateWithoutCreditnoteDataInput
+  upsert: InvoiceUpsertWithoutCreditnoteInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceUpdateOneRequiredWithoutItemsInput {
+  create: InvoiceCreateWithoutItemsInput
+  update: InvoiceUpdateWithoutItemsDataInput
+  upsert: InvoiceUpsertWithoutItemsInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceUpdateOneRequiredWithoutNameInput {
+  create: InvoiceCreateWithoutNameInput
+  update: InvoiceUpdateWithoutNameDataInput
+  upsert: InvoiceUpsertWithoutNameInput
+  connect: InvoiceWhereUniqueInput
+}
+
+input InvoiceUpdateWithoutCreditnoteDataInput {
+  name: NameUpdateOneWithoutInvoiceInput
+  currency: String
+  items: ItemUpdateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+}
+
+input InvoiceUpdateWithoutItemsDataInput {
+  name: NameUpdateOneWithoutInvoiceInput
+  currency: String
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteUpdateOneWithoutInvoiceInput
+}
+
+input InvoiceUpdateWithoutNameDataInput {
+  currency: String
+  items: ItemUpdateManyWithoutInvoiceInput
+  status: String
+  isPaid: Boolean
+  creditnote: CreditnoteUpdateOneWithoutInvoiceInput
+}
+
+input InvoiceUpsertWithoutCreditnoteInput {
+  update: InvoiceUpdateWithoutCreditnoteDataInput!
+  create: InvoiceCreateWithoutCreditnoteInput!
+}
+
+input InvoiceUpsertWithoutItemsInput {
+  update: InvoiceUpdateWithoutItemsDataInput!
+  create: InvoiceCreateWithoutItemsInput!
+}
+
+input InvoiceUpsertWithoutNameInput {
+  update: InvoiceUpdateWithoutNameDataInput!
+  create: InvoiceCreateWithoutNameInput!
+}
+
+input InvoiceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: NameWhereInput
+  currency: String
+  currency_not: String
+  currency_in: [String!]
+  currency_not_in: [String!]
+  currency_lt: String
+  currency_lte: String
+  currency_gt: String
+  currency_gte: String
+  currency_contains: String
+  currency_not_contains: String
+  currency_starts_with: String
+  currency_not_starts_with: String
+  currency_ends_with: String
+  currency_not_ends_with: String
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  isPaid: Boolean
+  isPaid_not: Boolean
+  creditnote: CreditnoteWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [InvoiceWhereInput!]
+  OR: [InvoiceWhereInput!]
+  NOT: [InvoiceWhereInput!]
+}
+
+input InvoiceWhereUniqueInput {
+  id: ID
+}
+
+type Item {
+  id: ID!
+  description: String!
+  price: Float!
+  invoice: Invoice!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ItemConnection {
+  pageInfo: PageInfo!
+  edges: [ItemEdge]!
+  aggregate: AggregateItem!
+}
+
+input ItemCreateInput {
+  id: ID
+  description: String
+  price: Float!
+  invoice: InvoiceCreateOneWithoutItemsInput!
+}
+
+input ItemCreateManyWithoutInvoiceInput {
+  create: [ItemCreateWithoutInvoiceInput!]
+  connect: [ItemWhereUniqueInput!]
+}
+
+input ItemCreateWithoutInvoiceInput {
+  id: ID
+  description: String
+  price: Float!
+}
+
+type ItemEdge {
+  node: Item!
+  cursor: String!
+}
+
+enum ItemOrderByInput {
+  id_ASC
+  id_DESC
+  description_ASC
+  description_DESC
+  price_ASC
+  price_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ItemPreviousValues {
+  id: ID!
+  description: String!
+  price: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ItemScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ItemScalarWhereInput!]
+  OR: [ItemScalarWhereInput!]
+  NOT: [ItemScalarWhereInput!]
+}
+
+type ItemSubscriptionPayload {
+  mutation: MutationType!
+  node: Item
+  updatedFields: [String!]
+  previousValues: ItemPreviousValues
+}
+
+input ItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ItemWhereInput
+  AND: [ItemSubscriptionWhereInput!]
+  OR: [ItemSubscriptionWhereInput!]
+  NOT: [ItemSubscriptionWhereInput!]
+}
+
+input ItemUpdateInput {
+  description: String
+  price: Float
+  invoice: InvoiceUpdateOneRequiredWithoutItemsInput
+}
+
+input ItemUpdateManyDataInput {
+  description: String
+  price: Float
+}
+
+input ItemUpdateManyMutationInput {
+  description: String
+  price: Float
+}
+
+input ItemUpdateManyWithoutInvoiceInput {
+  create: [ItemCreateWithoutInvoiceInput!]
+  delete: [ItemWhereUniqueInput!]
+  connect: [ItemWhereUniqueInput!]
+  set: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  update: [ItemUpdateWithWhereUniqueWithoutInvoiceInput!]
+  upsert: [ItemUpsertWithWhereUniqueWithoutInvoiceInput!]
+  deleteMany: [ItemScalarWhereInput!]
+  updateMany: [ItemUpdateManyWithWhereNestedInput!]
+}
+
+input ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput!
+  data: ItemUpdateManyDataInput!
+}
+
+input ItemUpdateWithoutInvoiceDataInput {
+  description: String
+  price: Float
+}
+
+input ItemUpdateWithWhereUniqueWithoutInvoiceInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateWithoutInvoiceDataInput!
+}
+
+input ItemUpsertWithWhereUniqueWithoutInvoiceInput {
+  where: ItemWhereUniqueInput!
+  update: ItemUpdateWithoutInvoiceDataInput!
+  create: ItemCreateWithoutInvoiceInput!
+}
+
+input ItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  invoice: InvoiceWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ItemWhereInput!]
+  OR: [ItemWhereInput!]
+  NOT: [ItemWhereInput!]
+}
+
+input ItemWhereUniqueInput {
+  id: ID
+}
+
+scalar Long
+
+type Mutation {
+  createCreditnote(data: CreditnoteCreateInput!): Creditnote!
+  updateCreditnote(data: CreditnoteUpdateInput!, where: CreditnoteWhereUniqueInput!): Creditnote
+  updateManyCreditnotes(data: CreditnoteUpdateManyMutationInput!, where: CreditnoteWhereInput): BatchPayload!
+  upsertCreditnote(where: CreditnoteWhereUniqueInput!, create: CreditnoteCreateInput!, update: CreditnoteUpdateInput!): Creditnote!
+  deleteCreditnote(where: CreditnoteWhereUniqueInput!): Creditnote
+  deleteManyCreditnotes(where: CreditnoteWhereInput): BatchPayload!
+  createInvoice(data: InvoiceCreateInput!): Invoice!
+  updateInvoice(data: InvoiceUpdateInput!, where: InvoiceWhereUniqueInput!): Invoice
+  updateManyInvoices(data: InvoiceUpdateManyMutationInput!, where: InvoiceWhereInput): BatchPayload!
+  upsertInvoice(where: InvoiceWhereUniqueInput!, create: InvoiceCreateInput!, update: InvoiceUpdateInput!): Invoice!
+  deleteInvoice(where: InvoiceWhereUniqueInput!): Invoice
+  deleteManyInvoices(where: InvoiceWhereInput): BatchPayload!
+  createItem(data: ItemCreateInput!): Item!
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteManyItems(where: ItemWhereInput): BatchPayload!
+  createName(data: NameCreateInput!): Name!
+  updateName(data: NameUpdateInput!, where: NameWhereUniqueInput!): Name
+  updateManyNames(data: NameUpdateManyMutationInput!, where: NameWhereInput): BatchPayload!
+  upsertName(where: NameWhereUniqueInput!, create: NameCreateInput!, update: NameUpdateInput!): Name!
+  deleteName(where: NameWhereUniqueInput!): Name
+  deleteManyNames(where: NameWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type Name {
+  id: ID!
+  yearIssued: String!
+  sfx: String!
+  invoice: Invoice!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NameConnection {
+  pageInfo: PageInfo!
+  edges: [NameEdge]!
+  aggregate: AggregateName!
+}
+
+input NameCreateInput {
+  id: ID
+  yearIssued: String!
+  sfx: String!
+  invoice: InvoiceCreateOneWithoutNameInput!
+}
+
+input NameCreateOneWithoutInvoiceInput {
+  create: NameCreateWithoutInvoiceInput
+  connect: NameWhereUniqueInput
+}
+
+input NameCreateWithoutInvoiceInput {
+  id: ID
+  yearIssued: String!
+  sfx: String!
+}
+
+type NameEdge {
+  node: Name!
+  cursor: String!
+}
+
+enum NameOrderByInput {
+  id_ASC
+  id_DESC
+  yearIssued_ASC
+  yearIssued_DESC
+  sfx_ASC
+  sfx_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NamePreviousValues {
+  id: ID!
+  yearIssued: String!
+  sfx: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NameSubscriptionPayload {
+  mutation: MutationType!
+  node: Name
+  updatedFields: [String!]
+  previousValues: NamePreviousValues
+}
+
+input NameSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NameWhereInput
+  AND: [NameSubscriptionWhereInput!]
+  OR: [NameSubscriptionWhereInput!]
+  NOT: [NameSubscriptionWhereInput!]
+}
+
+input NameUpdateInput {
+  yearIssued: String
+  sfx: String
+  invoice: InvoiceUpdateOneRequiredWithoutNameInput
+}
+
+input NameUpdateManyMutationInput {
+  yearIssued: String
+  sfx: String
+}
+
+input NameUpdateOneWithoutInvoiceInput {
+  create: NameCreateWithoutInvoiceInput
+  update: NameUpdateWithoutInvoiceDataInput
+  upsert: NameUpsertWithoutInvoiceInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: NameWhereUniqueInput
+}
+
+input NameUpdateWithoutInvoiceDataInput {
+  yearIssued: String
+  sfx: String
+}
+
+input NameUpsertWithoutInvoiceInput {
+  update: NameUpdateWithoutInvoiceDataInput!
+  create: NameCreateWithoutInvoiceInput!
+}
+
+input NameWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  yearIssued: String
+  yearIssued_not: String
+  yearIssued_in: [String!]
+  yearIssued_not_in: [String!]
+  yearIssued_lt: String
+  yearIssued_lte: String
+  yearIssued_gt: String
+  yearIssued_gte: String
+  yearIssued_contains: String
+  yearIssued_not_contains: String
+  yearIssued_starts_with: String
+  yearIssued_not_starts_with: String
+  yearIssued_ends_with: String
+  yearIssued_not_ends_with: String
+  sfx: String
+  sfx_not: String
+  sfx_in: [String!]
+  sfx_not_in: [String!]
+  sfx_lt: String
+  sfx_lte: String
+  sfx_gt: String
+  sfx_gte: String
+  sfx_contains: String
+  sfx_not_contains: String
+  sfx_starts_with: String
+  sfx_not_starts_with: String
+  sfx_ends_with: String
+  sfx_not_ends_with: String
+  invoice: InvoiceWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [NameWhereInput!]
+  OR: [NameWhereInput!]
+  NOT: [NameWhereInput!]
+}
+
+input NameWhereUniqueInput {
+  id: ID
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  creditnote(where: CreditnoteWhereUniqueInput!): Creditnote
+  creditnotes(where: CreditnoteWhereInput, orderBy: CreditnoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Creditnote]!
+  creditnotesConnection(where: CreditnoteWhereInput, orderBy: CreditnoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CreditnoteConnection!
+  invoice(where: InvoiceWhereUniqueInput!): Invoice
+  invoices(where: InvoiceWhereInput, orderBy: InvoiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invoice]!
+  invoicesConnection(where: InvoiceWhereInput, orderBy: InvoiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InvoiceConnection!
+  item(where: ItemWhereUniqueInput!): Item
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  name(where: NameWhereUniqueInput!): Name
+  names(where: NameWhereInput, orderBy: NameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Name]!
+  namesConnection(where: NameWhereInput, orderBy: NameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NameConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  creditnote(where: CreditnoteSubscriptionWhereInput): CreditnoteSubscriptionPayload
+  invoice(where: InvoiceSubscriptionWhereInput): InvoiceSubscriptionPayload
+  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  name(where: NameSubscriptionWhereInput): NameSubscriptionPayload
+}
